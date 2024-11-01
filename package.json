@@ -8,10 +8,12 @@
     "dev:api": "cd apps/api && npm run start",
     "dev:client": "cd apps/client && npm run dev"
   },
-  "author": "",
+  "author": "Arthur Duarte",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "concurrently": "^9.0.1"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
 }
