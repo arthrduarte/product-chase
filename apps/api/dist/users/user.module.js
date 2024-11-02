@@ -6,24 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductModule = void 0;
+exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const product_controller_1 = require("./product.controller");
-const product_service_1 = require("./product.service");
-const product_schema_1 = require("./product.schema");
-const auth_module_1 = require("../auth/auth.module");
-let ProductModule = class ProductModule {
+const user_controller_1 = require("./user.controller");
+const user_service_1 = require("./user.service");
+const user_schema_1 = require("./user.schema");
+let UserModule = class UserModule {
 };
-exports.ProductModule = ProductModule;
-exports.ProductModule = ProductModule = __decorate([
+exports.UserModule = UserModule;
+exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: product_schema_1.Product.name, schema: product_schema_1.ProductSchema }]),
-            auth_module_1.AuthModule
-        ],
-        controllers: [product_controller_1.ProductController],
-        providers: [product_service_1.ProductService],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }])],
+        controllers: [user_controller_1.UserController],
+        providers: [user_service_1.UserService],
+        exports: [user_service_1.UserService]
     })
-], ProductModule);
-//# sourceMappingURL=product.module.js.map
+], UserModule);
+//# sourceMappingURL=user.module.js.map

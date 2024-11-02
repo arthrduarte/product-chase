@@ -5,16 +5,16 @@ export type ProductDocument = HydratedDocument<Product>;
 
 @Schema()
 export class Product {
-    @Prop()
+    @Prop({ required: true })
     title: string;
 
-    @Prop()
+    @Prop({ required: true })
     description: string;
 
-    @Prop()
+    @Prop({ required: true })
     url: string;
 
-    @Prop()
+    @Prop({ required: true })
     upvotes: number;
 }
 

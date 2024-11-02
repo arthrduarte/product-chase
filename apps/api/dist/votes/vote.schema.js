@@ -9,29 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductSchema = exports.Product = void 0;
+exports.VoteSchema = exports.Vote = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-let Product = class Product {
+let Vote = class Vote {
 };
-exports.Product = Product;
+exports.Vote = Vote;
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Product.prototype, "title", void 0);
+], Vote.prototype, "title", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Product.prototype, "description", void 0);
+], Vote.prototype, "description", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Product.prototype, "url", void 0);
+], Vote.prototype, "url", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Number)
-], Product.prototype, "upvotes", void 0);
-exports.Product = Product = __decorate([
+], Vote.prototype, "upvotes", void 0);
+exports.Vote = Vote = __decorate([
     (0, mongoose_1.Schema)()
-], Product);
-exports.ProductSchema = mongoose_1.SchemaFactory.createForClass(Product);
-//# sourceMappingURL=product.schema.js.map
+], Vote);
+exports.VoteSchema = mongoose_1.SchemaFactory.createForClass(Vote);
+//# sourceMappingURL=vote.schema.js.map

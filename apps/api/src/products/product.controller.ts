@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body, Put, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './product.schema';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('products')
 export class ProductController {
@@ -16,6 +18,7 @@ export class ProductController {
         return this.productService.findById(id);
     }
 
+    @UseGuards(AuthGuard)
     @Post()
     create(@Body() product: Product): Promise<Product> {
         return this.productService.create(product);

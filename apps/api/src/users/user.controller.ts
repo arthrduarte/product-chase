@@ -12,22 +12,12 @@ export class UserController {
     }
 
     @Get(':id')
-    findById(@Param('id') id: string): Promise<User | null> {
-        return this.userService.findById(id);
+    findByUsername(@Param('id') id: string): Promise<User | null> {
+        return this.userService.findByUsername(id);
     }
 
     @Post()
     create(@Body() user: User): Promise<User> {
         return this.userService.create(user);
-    }
-
-    @Put(':id')
-    update(@Param('id') id: string, @Body() userData: Partial<User>): Promise<User | null> {
-        return this.userService.update(id, userData);
-    }
-
-    @Delete(':id')
-    delete(@Param('id') id: string): Promise<User | null> {
-        return this.userService.delete(id);
     }
 }
