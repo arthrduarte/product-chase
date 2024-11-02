@@ -6,7 +6,7 @@ import { ProductModule } from './products/product.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb+srv://admin:bq6cz615za2uupb6@product-chase.ihtax.mongodb.net/product-chase`),
+    MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@product-chase.ihtax.mongodb.net/${process.env.MONGO_DB}`),
     ProductModule
   ],
   controllers: [AppController],
