@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import signupRouter from './routes/signup.route';
 import loginRouter from './routes/login.route';
+import productRouter from './routes/product.route';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 
 app.use('/auth/signup', signupRouter);
 app.use('/auth/login', loginRouter);
+app.use('/product', productRouter);
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
