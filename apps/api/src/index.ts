@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import signupRouter from './routes/signup.route';
+import loginRouter from './routes/login.route';
 
 dotenv.config();
 
@@ -12,8 +13,9 @@ const port = 3000;
 app.use(bodyParser.json());
 
 app.use('/auth/signup', signupRouter);
+app.use('/auth/login', loginRouter);
 app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server'); 
+    res.send('Express + TypeScript Server');
 });
 
 mongoose
