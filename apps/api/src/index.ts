@@ -5,16 +5,18 @@ import bodyParser from "body-parser";
 import signupRouter from './routes/signup.route';
 import loginRouter from './routes/login.route';
 import productRouter from './routes/product.route';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
 const port = 4000;
 
+app.use(cors())
 app.use(bodyParser.json());
 
-app.use('/auth/signup', signupRouter);
-app.use('/auth/login', loginRouter);
+app.use('/signup', signupRouter);
+app.use('/login', loginRouter);
 app.use('/product', productRouter);
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
