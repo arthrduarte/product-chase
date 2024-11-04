@@ -1,13 +1,17 @@
 'use client'
 
+import useToken from "@/hooks/useToken"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react";
 
 export default function Component() {
+    const { token, removeToken } = useToken();
     const [open, setOpen] = useState(false);
-    const session = localStorage.getItem("user");
-    console.log(session)
+
+    useEffect(() => {
+        console.log(token)
+    }, [token])
 
     return (
         <>
@@ -21,8 +25,8 @@ export default function Component() {
                         <Link href="/about" className="mx-2">About</Link>
                     </nav>
                     <div className="hidden lg:flex">
-                        {session ? (
-                            <Button onClick={() => localStorage.removeItem("user")}>Logout</Button>
+                        {token ? (
+                            <Button onClick={removeToken}>Logout</Button>
                         ) : (
                             <>
                                 <Button className="mx-2">
@@ -35,8 +39,8 @@ export default function Component() {
                         )}
                     </div>
                 </header>
-                {session ? (
-                    <Button className="lg:hidden" onClick={() => localStorage.removeItem("user")}>Logout</Button>
+                {token ? (
+                    <Button className="lg:hidden" onClick={removeToken}>Logout</Button>
                 ) : (
                     <>
                         <Button className="mx-2 lg:hidden">
