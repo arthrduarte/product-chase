@@ -5,12 +5,15 @@ import bodyParser from "body-parser";
 import signupRouter from './routes/signup.route';
 import loginRouter from './routes/login.route';
 import productRouter from './routes/product.route';
+import clerkWebhookHandler from './routes/clerkWebhookHandler';
 import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
 const port = 4000;
+
+app.use('/api/webhooks', clerkWebhookHandler);
 
 app.use(cors())
 app.use(bodyParser.json());
