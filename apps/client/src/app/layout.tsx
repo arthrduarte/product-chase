@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { ClerkProvider } from '@clerk/nextjs'
 
 export default function RootLayout({
   children,
@@ -10,11 +11,13 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
-      <body className="m-5 font-inter">
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="m-5 font-inter">
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
