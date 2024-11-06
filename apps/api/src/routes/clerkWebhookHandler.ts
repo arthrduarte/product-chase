@@ -2,6 +2,7 @@ import { Webhook } from 'svix';
 import bodyParser from 'body-parser';
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { User } from '../models/userModel';
 
 dotenv.config();
 const app = express();
@@ -53,10 +54,18 @@ app.post(
             return
         }
 
-        const { id } = evt.data
-        const eventType = evt.type
-        console.log(`Webhook with an ID of ${id} and type of ${eventType}`)
+        const { id, first_name, last_name, email_addresses } = evt.data;
+        const emailAddress = email_addresses[0]?.email_address;
         console.log('Webhook body:', evt.data)
+        console.log(`User email: ${emailAddress} fname: ${first_name} lname: ${last_name} id: ${id}`)
+
+        if (evt.type === 'user.created') {
+            const user = new User({ clerk_id: id, email: emailAddress, first_name, last_name });
+            await user.save();
+        }
+        if (evt.type === 'user.updated') {
+            const user = await User.findOneAndUpdate({ clerk_id: id }, { email: emailAddress, first_name, last_name });
+        }
 
         res.status(200).json({
             success: true,

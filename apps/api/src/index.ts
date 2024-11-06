@@ -2,8 +2,6 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import signupRouter from './routes/signup.route';
-import loginRouter from './routes/login.route';
 import productRouter from './routes/product.route';
 import clerkWebhookHandler from './routes/clerkWebhookHandler';
 import cors from 'cors';
@@ -18,8 +16,6 @@ app.use('/api/webhooks', clerkWebhookHandler);
 app.use(cors())
 app.use(bodyParser.json());
 
-app.use('/signup', signupRouter);
-app.use('/login', loginRouter);
 app.use('/product', productRouter);
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
