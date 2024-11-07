@@ -5,13 +5,10 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { useState } from 'react'
 import { Label } from '@/components/ui/label'
-import { permanentRedirect } from 'next/navigation'
-import useToken from '@/hooks/useToken'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { setToken } = useToken()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -24,11 +21,6 @@ export default function Login() {
       body: JSON.stringify({ email, password })
     })
 
-    const data = await response.json()
-    if (data) {
-      if (data.error) return alert(data.error)
-      setToken(data.accessToken)
-    }
 
   }
   return (
