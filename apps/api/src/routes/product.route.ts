@@ -1,10 +1,9 @@
 import express from 'express';
 import Product from '../models/productModel';
-import isAuthenticated from './middleware';
 
 const router = express.Router();
 
-router.post('/', isAuthenticated, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const product = new Product(req.body);
 
@@ -17,7 +16,7 @@ router.post('/', isAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/', isAuthenticated, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).json(products);

@@ -16,7 +16,7 @@ app.use('/api/webhooks', clerkWebhookHandler);
 app.use(cors())
 app.use(bodyParser.json());
 
-app.use('/product', productRouter);
+app.use('/products', productRouter);
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
