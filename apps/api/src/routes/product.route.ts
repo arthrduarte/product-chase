@@ -1,13 +1,15 @@
-import express from 'express';
+import express, { Request, Response, Router } from 'express';
 import Product from '../models/productModel';
 
-const router = express.Router();
+const router: Router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response): Promise<any> => {
     try {
         const product = new Product(req.body);
 
-        if (await Product.findOne({ url: product.url })) res.status(400).json({ message: 'Product with this URL already exists' });
+        if (await Product.findOne({ url: product.url })) {
+            return res.status(400).json({ message: 'Product with this URL already exists' });
+        }
 
         const savedProduct = await product.save();
         res.status(201).json(savedProduct);

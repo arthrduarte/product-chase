@@ -5,6 +5,7 @@ interface IProduct extends Document {
     description: string;
     url: string;
     upvotes: number;
+    tags: string[];
 }
 
 const ProductSchema: Schema = new Schema({

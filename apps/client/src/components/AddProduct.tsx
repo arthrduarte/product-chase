@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useToast } from '@/hooks/use-toast'
 
 const availableTags = ["Productivity", "Development", "Design", "Finance", "Social", "Marketing", "Sales", "AI", "Health", "Fitness", "Travel", "Platforms", "Web3", "Physical Products", "Ecommerce"];
 
@@ -19,6 +20,7 @@ export default function AddProduct() {
     const [url, setUrl] = useState('')
     const [imageFile, setImageFile] = useState(null)
     const [tags, setTags] = useState<string[]>([])
+    const { toast } = useToast()
 
     const handleTagChange = (tag: string) => {
         setTags(prevTags =>
@@ -30,7 +32,15 @@ export default function AddProduct() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(title, description, url, tags)
+
+        if (!title || !description || !url || tags.length === 0) {
+            toast({
+                title: "Invalid form",
+                description: "Please fill in all fields",
+                className: "bg-red-400 text-white border-transparent",
+            });
+            return;
+        }
 
         try {
             const response = await fetch('http://localhost:4000/products', {
@@ -47,17 +57,33 @@ export default function AddProduct() {
                 }),
             })
 
-            if (!response.ok) throw new Error("Failed to add product")
+            if (!response.ok) {
+                const errorData = await response.json();
+                toast({
+                    title: "Error adding product",
+                    description: errorData.message || "An error occurred",
+                    className: "bg-red-400 text-white border-transparent",
+                });
+                return;
+            }
 
             setTitle('')
             setDescription('')
             setUrl('')
             setImageFile(null)
             setTags([])
-            alert('Product added successfully!')
+            toast({
+                title: "Product added",
+                description: "Your product was addded successfully",
+                className: "bg-green-400 text-white border-transparent",
+            })
         } catch (error) {
+            toast({
+                title: "Error adding product",
+                description: (error as Error).message,
+                className: "bg-red-400 text-white border-transparent",
+            })
             console.error(error)
-            alert("Error adding product")
         }
     }
 
