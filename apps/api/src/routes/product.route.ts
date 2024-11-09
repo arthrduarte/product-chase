@@ -42,7 +42,8 @@ router.get('/', async (req, res) => {
             if (maxUpvotes) filter.upvotes.$lte = Number(maxUpvotes);
         }
 
-        const products = await Product.find(filter);
+        let products = await Product.find(filter);
+        products = products.sort((a, b) => b.upvotes - a.upvotes);
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ error: (error as Error).message });
