@@ -5,13 +5,18 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
+        console.log("hi")
         const product = new Product(req.body);
+        console.log("hi 2")
 
         if (await Product.findOne({ url: product.url })) res.status(400).json({ message: 'Product with this URL already exists' });
 
+        console.log("hi 3")
         const savedProduct = await product.save();
+        console.log("hi 4")
         res.status(201).json(savedProduct);
     } catch (error) {
+        console.error(error)
         res.status(400).json({ error: (error as Error).message });
     }
 });

@@ -15,6 +15,39 @@ export default function AddProduct() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
+    const [imageFile, setImageFile] = useState(null)
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        console.log(title, description, url)
+
+        try {
+            const response = await fetch('http://localhost:4000/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                },
+                body: JSON.stringify({
+                    title,
+                    description,
+                    url,
+                    upvotes: 0,
+                    tags: ['Marketing', 'Software']
+                }),
+            })
+
+            if (!response.ok) throw new Error("Failed to add product")
+
+            setTitle('')
+            setDescription('')
+            setUrl('')
+            setImageFile(null)
+            alert('Product added successfully!')
+        } catch (error) {
+            console.error(error)
+            alert("Error adding product")
+        }
+    }
 
     return (
         <>
@@ -31,18 +64,18 @@ export default function AddProduct() {
                             Add your product to Product Chase. When you are done, share it with the world.
                         </DialogDescription>
                     </DialogHeader>
-                    <form className="space-y-4 mt-4">
+                    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                         <div>
                             <Label htmlFor="title">Title</Label>
-                            <Input id="title" placeholder="Enter product title" required />
+                            <Input id="title" placeholder="Enter product title" required value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div>
                             <Label htmlFor="description">Description</Label>
-                            <Input id="description" placeholder="Enter product description" required />
+                            <Input id="description" placeholder="Enter product description" required value={description} onChange={(e) => setDescription(e.target.value)} />
                         </div>
                         <div>
                             <Label htmlFor="url">URL</Label>
-                            <Input id="url" placeholder="Enter product URL" type="url" required />
+                            <Input id="url" placeholder="Enter product URL" type="url" required value={url} onChange={(e) => setUrl(e.target.value)} />
                         </div>
                         <div>
                             <div className='flex flex-row gap-2 items-center'>

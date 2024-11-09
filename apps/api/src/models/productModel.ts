@@ -25,6 +25,10 @@ const ProductSchema: Schema = new Schema({
         required: true,
         default: 0
     },
+    tags: {
+        type: [String],
+        required: true
+    }
 })
 
 export default mongoose.model<IProduct>('Product', ProductSchema);
