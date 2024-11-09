@@ -45,7 +45,7 @@ export default function Component() {
                     </div>
                     <SignedOut>
                         <SignInButton>
-                            <Button variant="ghost" className="hidden md:inline-flex">Sign In</Button>
+                            <Button className="hidden md:inline-flex bg-blue-400 hover:bg-blue-500 text-white hover:text-white text-sm font-semibold">Sign In</Button>
                         </SignInButton>
                     </SignedOut>
                     <SignedIn>
@@ -73,7 +73,7 @@ function MobileNav() {
             <div>
                 <SignedOut>
                     <SignInButton>
-                        <Button className="w-full">Sign In</Button>
+                        <Button className="bg-blue-400 hover:bg-blue-500 text-white hover:text-white text-sm font-semibold">Sign In</Button>
                     </SignInButton>
                 </SignedOut>
                 <SignedIn>

@@ -66,11 +66,11 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                 description: "You must be signed in to upvote a product",
                 className: "bg-blue-400 text-white",
                 action: (
-                    <ToastAction altText='Go to sign in' className='hover:text-blue-400'>
+                    <div>
                         <SignInButton>
-                            Sign In
+                            <Button className="w-full bg-transparent border hover:bg-white hover:text-blue-400">Sign In</Button>
                         </SignInButton>
-                    </ToastAction>
+                    </div>
                 )
             })
             return
@@ -92,7 +92,8 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
 
     return (
         <>
-            <h1>All Products</h1>
+            <h1 className='text-lg font-semibold mt-5 lg:mt-0'>All Products</h1>
+            <hr className='hidden lg:block'/>
             <ScrollArea>
                 {products.map((product, index) => (
                     <div className='text-base' key={index}>

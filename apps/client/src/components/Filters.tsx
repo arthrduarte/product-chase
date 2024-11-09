@@ -36,7 +36,7 @@ export default function Filters({ uniqueTags }: FilterProps) {
                 <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">
                         <AccordionTrigger>
-                            <h1>Filters</h1>
+                            <h1 className='text-base'>Filters</h1>
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className='mb-4'>
@@ -68,8 +68,9 @@ export default function Filters({ uniqueTags }: FilterProps) {
                 </Accordion>
             </div>
             <div className="hidden lg:block">
-                <h1>Filters</h1>
-                <div className='mb-4'>
+                <h1 className='text-lg font-semibold mt-5 lg:mt-0'>Filters</h1>
+                <hr className='hidden lg:block' />
+                <div className='my-4'>
                     <Input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search for a product' />
                 </div>
                 <div className='mb-4'>

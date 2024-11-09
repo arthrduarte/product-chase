@@ -106,7 +106,7 @@ export default function AddProduct() {
                         </div>
                         <div>
                             <div className='flex flex-row gap-2 items-center'>
-                                <Label htmlFor="image">Image URL</Label>
+                                <Label htmlFor="image">Image</Label>
                                 <p className="text-sm text-gray-500">Optional</p>
                             </div>
                             <input
