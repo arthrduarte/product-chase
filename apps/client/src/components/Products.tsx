@@ -1,10 +1,12 @@
 'use client'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { Badge } from './ui/badge'
 import { ScrollArea } from './ui/scroll-area'
 import { useFilter } from '@/context/FilterContext'
 import { Types } from 'mongoose'
+import { SignInButton, useUser } from "@clerk/clerk-react";
+import { useToast } from '@/hooks/use-toast'
+import { ToastAction } from "@/components/ui/toast"
+import { Button } from './ui/button'
 
 interface Product {
     _id: Types.ObjectId,
@@ -23,6 +25,8 @@ interface ProductsProps {
 export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     const [products, setProducts] = useState<Product[]>([])
     const { search, tags, upvotes } = useFilter()
+    const { isSignedIn } = useUser();
+    const { toast } = useToast()
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -56,6 +60,22 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     }, [search, tags, upvotes])
 
     const addUpvote = async (id: string) => {
+        if (!isSignedIn) {
+            toast({
+                title: "Sign in",
+                description: "You must be signed in to upvote a product",
+                className: "bg-blue-400 text-white",
+                action: (
+                    <ToastAction altText='Go to sign in' className='hover:text-blue-400'>
+                        <SignInButton>
+                            Sign In
+                        </SignInButton>
+                    </ToastAction>
+                )
+            })
+            return
+        }
+
         try {
             const response = await fetch(`http://localhost:4000/products/${id}`, {
                 method: 'PUT'

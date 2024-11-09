@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from '@clerk/nextjs'
 import { FilterProvider } from "@/context/FilterContext";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
   children,
@@ -18,6 +19,7 @@ export default function RootLayout({
           <FilterProvider>
             <Navbar />
             {children}
+            <Toaster />
           </FilterProvider>
         </body>
       </html>
