@@ -1,47 +1,85 @@
 'use client'
 
+import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import AddProduct from "./AddProduct"
+import { Menu, X } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function Component() {
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <>
-            <div className="flex justify-between">
-                <header className="flex flex-row items-center justify-between w-full text-center">
-                    <div>
-                        <Link href="/">🏹 Product Chase</Link>
-                    </div>
-                    <nav className="hidden lg:flex ">
-                        <Link href="/" className="mx-2">Products</Link>
-                        <Link href="/about" className="mx-2">About</Link>
+        <header className="sticky top-0 z-50 w-full ">
+            <div className="flex h-14 items-center">
+                <div className="mr-4 hidden md:flex">
+                    <Link href="/" className="mr-6 flex items-center space-x-2">
+                        <span className="hidden font-bold sm:inline-block">🏹 Product Chase</span>
+                    </Link>
+                    <nav className="flex items-center space-x-6 text-sm font-medium">
+                        <Link href="/">Products</Link>
+                        <Link href="/about">About</Link>
                     </nav>
-                    <div className="lg:flex">
-                        <SignedOut>
-                            <SignInButton>
-                                <Button>Sign In</Button>
-                            </SignInButton>
-                        </SignedOut>
-                        <SignedIn>
-                            <UserButton />
-                        </SignedIn>
+                </div>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                    <SheetTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+                        >
+                            <Menu className="h-6 w-6" />
+                            <span className="sr-only">Toggle Menu</span>
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent side="left" className="pr-0">
+                        <MobileNav />
+                    </SheetContent>
+                </Sheet>
+                <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+                    <div className="w-full flex-1 md:w-auto md:flex-none">
+                        <Link href="/" className="mr-6 flex items-center space-x-2 md:hidden">
+                            <span className="font-bold inline-block">🏹 Product Chase</span>
+                        </Link>
                     </div>
-                    <div onClick={() => setOpen(prev => !prev)} className="lg:hidden my-auto">
-                        <svg data-testid="geist-icon" height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M1 2H1.75H14.25H15V3.5H14.25H1.75H1V2ZM1 12.5H1.75H14.25H15V14H14.25H1.75H1V12.5ZM1.75 7.25H1V8.75H1.75H14.25H15V7.25H14.25H1.75Z" fill="currentColor"></path>
-                        </svg>
-                    </div>
-                    {open && (
-                        <div className="absolute right-0 top-[60px] w-1/2 h-[calc(100vh-44px)] bg-white shadow-lg flex flex-col items-start p-4">
-                            <Link href="/">Products</Link>
-                            <Link href="/about">About</Link>
+                    <SignedOut>
+                        <SignInButton>
+                            <Button variant="ghost" className="hidden md:inline-flex">Sign In</Button>
+                        </SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                        <div className="hidden lg:flex">
+                            <AddProduct />
                         </div>
-                    )}
-                </header>
+                            <UserButton />
+                    </SignedIn>
+                </div>
             </div>
-        </>
+        </header>
+    )
+}
+
+function MobileNav() {
+    return (
+        <div className="flex flex-col space-y-3">
+            <Link href="/" className="font-bold">
+                🏹 Product Chase
+            </Link>
+            <nav className="flex flex-col space-y-3">
+                <Link href="/">Products</Link>
+                <Link href="/about">About</Link>
+            </nav>
+            <div>
+                <SignedOut>
+                    <SignInButton>
+                        <Button className="w-full">Sign In</Button>
+                    </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                    <AddProduct />
+                </SignedIn>
+            </div>
+        </div>
     )
 }

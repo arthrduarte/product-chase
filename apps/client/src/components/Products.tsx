@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
 import { ScrollArea } from './ui/scroll-area'
 import { useFilter } from '@/context/FilterContext'
+import { Types } from 'mongoose'
 
 interface Product {
+    _id: Types.ObjectId,
     title: string
     description: string
     url: string
@@ -13,12 +15,12 @@ interface Product {
     tags: string[]
 }
 
-interface ProductsProps{
+interface ProductsProps {
     setUniqueTags: (tags: string[]) => void
     uniqueTags: string[]
 }
 
-export default function Products({setUniqueTags, uniqueTags}: ProductsProps) {
+export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     const [products, setProducts] = useState<Product[]>([])
     const { search, tags, upvotes } = useFilter()
 
@@ -65,11 +67,11 @@ export default function Products({setUniqueTags, uniqueTags}: ProductsProps) {
                             </div>
                             <div className='w-full'>
                                 <div>
-                                    <Link href="/about">
+                                    {/* <Link href={`/product/${product._id.toString()}`}> */}
                                         <strong>{product.title}</strong>
                                         <span className='mx-1'>•</span>
                                         {product.description}
-                                    </Link>
+                                    {/* </Link> */}
                                 </div>
                                 <div className='text-gray-400 text-sm font-light flex flex-wrap gap-1'>
                                     {product.tags.map((tag, index) => (
