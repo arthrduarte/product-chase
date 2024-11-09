@@ -18,7 +18,30 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find();
+
+        const { search, tags, minUpvotes, maxUpvotes } = req.query
+
+        const filter: any = {}
+
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+            ]
+        }
+
+        if (tags) {
+            const tagsArray = (tags as string).split(',')
+            filter.tags = { $all: tagsArray }
+        }
+
+        if (minUpvotes || maxUpvotes) {
+            filter.upvotes = {};
+            if (minUpvotes) filter.upvotes.$gte = Number(minUpvotes);
+            if (maxUpvotes) filter.upvotes.$lte = Number(maxUpvotes);
+        }
+
+        const products = await Product.find(filter);
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ error: (error as Error).message });
