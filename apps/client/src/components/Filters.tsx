@@ -10,7 +10,7 @@ interface FilterProps {
     uniqueTags: string[]
 }
 
-export default function Filters({uniqueTags}: FilterProps) {
+export default function Filters({ uniqueTags }: FilterProps) {
     const { search, tags, upvotes, setSearch, setTags, setUpvotes } = useFilter()
 
     const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,25 +40,27 @@ export default function Filters({uniqueTags}: FilterProps) {
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className='mb-4'>
-                                <Input type="text" placeholder='Search for a product' />
+                                <Input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search for a product' />
                             </div>
                             <div className='mb-4'>
                                 <Label>Upvotes</Label>
                                 <div className='mt-2 flex flex-row gap-2 w-1/2'>
-                                    <Input id="min" type="number" placeholder="Min" />
-                                    <Input id="max" type="number" placeholder="Max" />
+                                    <Input id="min" type="number" placeholder="Min" onChange={handleMinChange} />
+                                    <Input id="max" type="number" placeholder="Max" onChange={handleMaxChange} />
                                 </div>
                             </div>
                             <div>
                                 <Label htmlFor="tags">Tags</Label>
                                 <div className='mt-2 flex flex-wrap gap-2'>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>Social Media</Button>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>AI</Button>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>Health and Fitness</Button>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>Nature</Button>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>Marketing</Button>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>Physical Product</Button>
-                                    <Button className='bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100'>E-commerce</Button>
+                                    {uniqueTags.map(tag => (
+                                        <Button
+                                            key={tag}
+                                            onClick={() => handleTags(tag)}
+                                            className={`bg-blue-100 hover:bg-blue-100 text-blue-600 font-normal hover:font-medium rounded-full transition duration-100 ${tags.includes(tag) ? 'bg-blue-200 hover:bg-blue-200' : ''}`}
+                                        >
+                                            {tag}
+                                        </Button>
+                                    ))}
                                 </div>
                             </div>
                         </AccordionContent>
@@ -91,7 +93,6 @@ export default function Filters({uniqueTags}: FilterProps) {
                         ))}
                     </div>
                 </div>
-
             </div>
         </>
     )
