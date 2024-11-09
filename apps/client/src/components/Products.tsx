@@ -13,20 +13,23 @@ interface Product {
     tags: string[]
 }
 
-export default function Products() {
-    const [products, setProducts] = useState<Product[]>([])
-    const {search, tags, upvotes} = useFilter()
-    console.log({search, tags, upvotes})
+interface ProductsProps{
+    setUniqueTags: (tags: string[]) => void
+    uniqueTags: string[]
+}
 
+export default function Products({setUniqueTags, uniqueTags}: ProductsProps) {
+    const [products, setProducts] = useState<Product[]>([])
+    const { search, tags, upvotes } = useFilter()
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const url = new URL ('http://localhost:4000/products')
+                const url = new URL('http://localhost:4000/products')
                 url.searchParams.append('search', search)
                 url.searchParams.append('tags', tags.join(','))
                 url.searchParams.append('minUpvotes', upvotes.min.toString())
-                if(upvotes.max !== undefined){
+                if (upvotes.max !== undefined) {
                     url.searchParams.append('maxUpvotes', upvotes.max.toString())
                 }
 
@@ -34,6 +37,13 @@ export default function Products() {
                 if (!response.ok) throw new Error('Failed to fetch products')
                 const data = await response.json()
                 setProducts(data)
+
+                if (uniqueTags.length > 0) return
+                const tagsSet = new Set<string>()
+                data.forEach((product: Product) => {
+                    product.tags.forEach((tag: string) => tagsSet.add(tag))
+                })
+                setUniqueTags(Array.from(tagsSet))
 
             } catch (error) {
                 console.error("Error fetching products: ", error)
