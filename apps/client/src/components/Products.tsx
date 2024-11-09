@@ -55,6 +55,21 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
         fetchProducts()
     }, [search, tags, upvotes])
 
+    const addUpvote = async (id: string) => {
+        try {
+            const response = await fetch(`http://localhost:4000/products/${id}`, {
+                method: 'PUT'
+            })
+
+            if (!response.ok) throw new Error('Failed to upvote product')
+
+            const updatedProduct = await response.json()
+            setProducts(products.map(product => product._id.toString() === id ? updatedProduct : product))
+        } catch (error) {
+            console.error("Error upvoting product: ", error)
+        }
+    }
+
     return (
         <>
             <h1>All Products</h1>
@@ -68,9 +83,9 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                             <div className='w-full'>
                                 <div>
                                     {/* <Link href={`/product/${product._id.toString()}`}> */}
-                                        <strong>{product.title}</strong>
-                                        <span className='mx-1'>•</span>
-                                        {product.description}
+                                    <strong>{product.title}</strong>
+                                    <span className='mx-1'>•</span>
+                                    {product.description}
                                     {/* </Link> */}
                                 </div>
                                 <div className='text-gray-400 text-sm font-light flex flex-wrap gap-1'>
@@ -79,7 +94,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                                     ))}
                                 </div>
                             </div>
-                            <div className='flex flex-col items-center rounded px-2 text-gray-400 justify-center'>
+                            <div className='flex flex-col items-center rounded px-2 text-gray-400 justify-center hover:shadow-2xl transition ease-in cursor-pointer' onClick={() => addUpvote(product._id.toString())}>
                                 <p>⬆️</p>
                                 <p>{product.upvotes}</p>
                             </div>

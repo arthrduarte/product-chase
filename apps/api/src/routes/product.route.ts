@@ -5,15 +5,11 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        console.log("hi")
         const product = new Product(req.body);
-        console.log("hi 2")
 
         if (await Product.findOne({ url: product.url })) res.status(400).json({ message: 'Product with this URL already exists' });
 
-        console.log("hi 3")
         const savedProduct = await product.save();
-        console.log("hi 4")
         res.status(201).json(savedProduct);
     } catch (error) {
         console.error(error)
@@ -67,7 +63,7 @@ router.put('/:id', async (req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            { $inc: { upvotes: 1 } },
             { new: true }
         );
         if (updatedProduct) res.status(200).json(updatedProduct);
