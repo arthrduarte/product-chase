@@ -5,11 +5,20 @@ import bodyParser from "body-parser";
 import productRouter from './routes/product.route';
 import clerkWebhookHandler from './routes/clerkWebhookHandler';
 import cors from 'cors';
+import AWS from 'aws-sdk'
 
 dotenv.config();
 
 const app: Express = express();
 const port = 4000;
+
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+});
+
+export { s3 };
 
 app.use('/api/webhooks', clerkWebhookHandler);
 

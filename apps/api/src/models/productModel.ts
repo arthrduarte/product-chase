@@ -6,6 +6,7 @@ interface IProduct extends Document {
     url: string;
     upvotes: number;
     tags: string[];
+    imageUrl: string;
 }
 
 const ProductSchema: Schema = new Schema({
@@ -28,6 +29,10 @@ const ProductSchema: Schema = new Schema({
     },
     tags: {
         type: [String],
+        required: true
+    },
+    imageUrl: {
+        type: String,
         required: true
     }
 })
