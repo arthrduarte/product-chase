@@ -7,6 +7,7 @@ import { SignInButton, useUser } from "@clerk/clerk-react";
 import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from "@/components/ui/toast"
 import { Button } from './ui/button'
+import Link from 'next/link'
 
 interface Product {
     _id: Types.ObjectId,
@@ -15,6 +16,7 @@ interface Product {
     url: string
     upvotes: number
     tags: string[]
+    imageUrl: string
 }
 
 interface ProductsProps {
@@ -93,21 +95,21 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     return (
         <>
             <h1 className='text-lg font-semibold mt-5 lg:mt-0'>All Products</h1>
-            <hr className='hidden lg:block'/>
+            <hr className='hidden lg:block' />
             <ScrollArea>
                 {products.map((product, index) => (
                     <div className='text-base' key={index}>
-                        <div className='flex flex-row justify-between gap-2 my-4'>
+                        <div className='flex flex-row justify-between gap-2 my-8'>
                             <div className='flex flex-row'>
-                                <img src="https://picsum.photos/200/300" className='w-10 h-10 rounded-full' alt="" />
+                                <img src={`${product.imageUrl}`} className='w-12 h-12 rounded-lg' alt="" />
                             </div>
                             <div className='w-full'>
                                 <div>
-                                    {/* <Link href={`/product/${product._id.toString()}`}> */}
-                                    <strong>{product.title}</strong>
-                                    <span className='mx-1'>•</span>
-                                    {product.description}
-                                    {/* </Link> */}
+                                    <a href={product.url}>
+                                        <strong>{product.title}</strong>
+                                        <span className='mx-1'>•</span>
+                                        {product.description}
+                                    </a>
                                 </div>
                                 <div className='text-gray-400 text-sm font-light flex flex-wrap gap-1'>
                                     {product.tags.map((tag, index) => (

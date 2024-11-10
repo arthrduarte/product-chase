@@ -18,7 +18,7 @@ export default function AddProduct() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
-    const [imageFile, setImageFile] = useState(null)
+    const [imageFile, setImageFile] = useState<File | null>(null)
     const [tags, setTags] = useState<string[]>([])
     const { toast } = useToast()
 
@@ -28,6 +28,11 @@ export default function AddProduct() {
                 ? prevTags.filter(t => t !== tag)
                 : [...prevTags, tag]
         )
+    }
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null
+        setImageFile(file)
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,18 +48,18 @@ export default function AddProduct() {
         }
 
         try {
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('url', url);
+            formData.append('tags', JSON.stringify(tags));
+            if (imageFile) {
+                formData.append('image', imageFile); 
+            }
+
             const response = await fetch('http://localhost:4000/products', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    title,
-                    description,
-                    url,
-                    upvotes: 0,
-                    tags
-                }),
+                body: formData,
             })
 
             if (!response.ok) {
@@ -139,6 +144,7 @@ export default function AddProduct() {
                                 id="image"
                                 type="file"
                                 accept="image/*"
+                                onChange={handleImageChange}
                                 className="cursor-pointer mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                             />
                         </div>
