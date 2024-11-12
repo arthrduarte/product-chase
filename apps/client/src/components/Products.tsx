@@ -101,7 +101,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                     <div className='text-base' key={index}>
                         <div className='flex flex-row justify-between gap-2 my-8'>
                             <div className='flex flex-row'>
-                                <img src={`${product.imageUrl}`} className='w-12 h-12 rounded-lg' alt="" />
+                                <img src={`${product.imageUrl}`} className='lg:w-12 lg:h-12 w-10 h-8 object-cover' alt="" />
                             </div>
                             <div className='w-full'>
                                 <div>
@@ -117,7 +117,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                                     ))}
                                 </div>
                             </div>
-                            <div className='flex flex-col items-center rounded px-2 text-gray-400 justify-center hover:shadow-2xl transition ease-in cursor-pointer' onClick={() => addUpvote(product._id.toString())}>
+                            <div className='flex flex-col items-center rounded px-2 text-gray-400 justify-start hover:shadow-2xl transition ease-in cursor-pointer' onClick={() => addUpvote(product._id.toString())}>
                                 <p>⬆️</p>
                                 <p>{product.upvotes}</p>
                             </div>
