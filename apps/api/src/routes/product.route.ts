@@ -1,15 +1,40 @@
 import express, { Request, Response, Router } from 'express';
 import Product from '../models/productModel';
+import { s3 } from '../index';
+import multer from 'multer'
 
 const router: Router = express.Router();
 
-router.post('/', async (req: Request, res: Response): Promise<any> => {
-    try {
-        const product = new Product(req.body);
+const upload = multer({ storage: multer.memoryStorage() });
 
-        if (await Product.findOne({ url: product.url })) {
+router.post('/', upload.single('image'), async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { title, description, url, tags } = req.body;
+
+        if (await Product.findOne({ url })) {
             return res.status(400).json({ message: 'Product with this URL already exists' });
         }
+
+        let imageUrl = null
+
+        if (req.file) {
+            const uploadParams = {
+                Bucket: process.env.AWS_BUCKET_NAME!,
+                Key: `uploads/${Date.now()}_${req.file.originalname}`,
+                Body: req.file.buffer,
+                ContentType: req.file.mimetype,
+            }
+            const s3Response = await s3.upload(uploadParams).promise();
+            imageUrl = s3Response.Location;
+        }
+
+        const product = new Product({
+            title,
+            description,
+            url,
+            tags: JSON.parse(tags),
+            imageUrl,
+        });
 
         const savedProduct = await product.save();
         res.status(201).json(savedProduct);
