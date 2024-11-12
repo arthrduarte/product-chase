@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from '@clerk/nextjs'
+import { FilterProvider } from "@/context/FilterContext";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
   children,
@@ -14,8 +16,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className="m-5 font-inter">
-          <Navbar />
-          {children}
+          <FilterProvider>
+            <Navbar />
+            {children}
+            <Toaster />
+          </FilterProvider>
         </body>
       </html>
     </ClerkProvider>

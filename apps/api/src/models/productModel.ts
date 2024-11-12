@@ -5,6 +5,8 @@ interface IProduct extends Document {
     description: string;
     url: string;
     upvotes: number;
+    tags: string[];
+    imageUrl: string;
 }
 
 const ProductSchema: Schema = new Schema({
@@ -25,6 +27,14 @@ const ProductSchema: Schema = new Schema({
         required: true,
         default: 0
     },
+    tags: {
+        type: [String],
+        required: true
+    },
+    imageUrl: {
+        type: String,
+        required: true
+    }
 })
 
 export default mongoose.model<IProduct>('Product', ProductSchema);
