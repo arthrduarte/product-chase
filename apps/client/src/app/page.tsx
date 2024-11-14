@@ -1,5 +1,4 @@
 'use client'
-import Image from "next/image";
 import Products from "@/components/Products";
 import Filters from "@/components/Filters";
 import { useState } from "react";

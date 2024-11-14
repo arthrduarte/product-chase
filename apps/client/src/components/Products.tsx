@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from "@/components/ui/toast"
 import { Button } from './ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Product {
     _id: Types.ObjectId,
@@ -59,7 +60,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
             }
         }
         fetchProducts()
-    }, [search, tags, upvotes])
+    }, [search, tags, upvotes, setUniqueTags, uniqueTags.length])
 
     const addUpvote = async (id: string) => {
         if (!isSignedIn) {
@@ -101,7 +102,13 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                     <div className='text-base' key={index}>
                         <div className='flex flex-row justify-between gap-2 my-8'>
                             <div className='flex flex-row'>
-                                <img src={`${product.imageUrl}`} className='lg:w-12 lg:h-12 w-10 h-8 object-cover' alt="" />
+                                <Image 
+                                    src={product.imageUrl} 
+                                    alt={product.title}
+                                    width={48}
+                                    height={48}
+                                    className='lg:w-12 lg:h-12 w-10 h-8 object-cover'
+                                />
                             </div>
                             <div className='w-full'>
                                 <div>
