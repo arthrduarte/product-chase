@@ -34,7 +34,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const url = new URL('http://localhost:4000/products')
+                const url = new URL('https://product-chase.onrender.com/products')
                 url.searchParams.append('search', search)
                 url.searchParams.append('tags', tags.join(','))
                 url.searchParams.append('minUpvotes', upvotes.min.toString())
@@ -80,7 +80,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/products/${id}`, {
+            const response = await fetch(`https://product-chase.onrender.com/products/${id}`, {
                 method: 'PUT'
             })
 

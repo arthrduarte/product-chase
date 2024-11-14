@@ -10,7 +10,7 @@ import AWS from 'aws-sdk'
 dotenv.config();
 
 const app: Express = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,

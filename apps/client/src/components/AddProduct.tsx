@@ -57,7 +57,7 @@ export default function AddProduct() {
                 formData.append('image', imageFile); 
             }
 
-            const response = await fetch('http://localhost:4000/products', {
+            const response = await fetch('https://product-chase.onrender.com/products', {
                 method: 'POST',
                 body: formData,
             })
