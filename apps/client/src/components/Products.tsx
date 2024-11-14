@@ -105,8 +105,8 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                                 <Image 
                                     src={product.imageUrl} 
                                     alt={product.title}
-                                    width={48}
-                                    height={48}
+                                    width={500}
+                                    height={500}
                                     className='lg:w-12 lg:h-12 w-10 h-8 object-cover'
                                 />
                             </div>
