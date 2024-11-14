@@ -1,1 +1,1 @@
-web: npm start --prefix apps/client
+web: npm start --prefix apps/api
