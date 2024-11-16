@@ -45,8 +45,14 @@ export default function Filters({ uniqueTags }: FilterProps) {
                             <div className='mb-4'>
                                 <Label>Upvotes</Label>
                                 <div className='mt-2 flex flex-row gap-2 w-1/2'>
-                                    <Input id="min" type="number" placeholder="Min" onChange={handleMinChange} />
-                                    <Input id="max" type="number" placeholder="Max" onChange={handleMaxChange} />
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <Label htmlFor="min-mobile" className="text-sm">Min</Label>
+                                        <Input id="min-mobile" type="number" placeholder="Min" onChange={handleMinChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <Label htmlFor="max-mobile" className="text-sm">Max</Label>
+                                        <Input id="max-mobile" type="number" placeholder="Max" onChange={handleMaxChange} />
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -76,8 +82,14 @@ export default function Filters({ uniqueTags }: FilterProps) {
                 <div className='mb-4'>
                     <Label>Upvotes</Label>
                     <div className='mt-2 flex flex-row gap-2 w-1/2'>
-                        <Input id="min" type="number" placeholder="Min" onChange={handleMinChange} />
-                        <Input id="max" type="number" placeholder="Max" onChange={handleMaxChange} />
+                        <div className="flex flex-col gap-1 w-full">
+                            <Label htmlFor="min-desktop" className="text-sm">Min</Label>
+                            <Input id="min-desktop" type="number" placeholder="Min" onChange={handleMinChange} />
+                        </div>
+                        <div className="flex flex-col gap-1 w-full">
+                            <Label htmlFor="max-desktop" className="text-sm">Max</Label>
+                            <Input id="max-desktop" type="number" placeholder="Max" onChange={handleMaxChange} />
+                        </div>
                     </div>
                 </div>
                 <div>
