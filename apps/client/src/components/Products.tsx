@@ -27,12 +27,14 @@ interface ProductsProps {
 
 export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     const [products, setProducts] = useState<Product[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const { search, tags, upvotes } = useFilter()
     const { isSignedIn } = useUser();
     const { toast } = useToast()
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setIsLoading(true)
             try {
                 const url = new URL('https://product-chase.onrender.com/products')
                 url.searchParams.append('search', search)
@@ -57,6 +59,8 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
             } catch (error) {
                 console.error("Error fetching products: ", error)
                 setProducts([])
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchProducts()
@@ -91,6 +95,35 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
         } catch (error) {
             console.error("Error upvoting product: ", error)
         }
+    }
+
+    if (isLoading) {
+        return (
+            <>
+                <h1 className='text-lg font-semibold mt-5 lg:mt-0'>All Products</h1>
+                <hr className='hidden lg:block' />
+                <div>
+                    <p className='text-sm text-gray-400 my-5'>This application uses Render's free tier. First requests may take a while.</p>
+                    {[...Array(5)].map((_, index) => (
+                        <div className='text-base animate-pulse' key={index}>
+                            <div className='flex flex-row justify-between gap-2 my-8'>
+                                <div className='flex flex-row'>
+                                    <div className='lg:w-12 lg:h-12 w-10 h-8 bg-gray-200 rounded'></div>
+                                </div>
+                                <div className='w-full'>
+                                    <div className='h-4 bg-gray-200 rounded w-3/4 mb-2'></div>
+                                    <div className='h-3 bg-gray-200 rounded w-1/2'></div>
+                                </div>
+                                <div className='flex flex-col items-center rounded px-2'>
+                                    <div className='h-4 w-4 bg-gray-200 rounded mb-1'></div>
+                                    <div className='h-4 w-4 bg-gray-200 rounded'></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </>
+        )
     }
 
     return (
