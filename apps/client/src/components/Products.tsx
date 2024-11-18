@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from "@/components/ui/toast"
 import { Button } from './ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Product {
     _id: Types.ObjectId,
@@ -26,14 +27,16 @@ interface ProductsProps {
 
 export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
     const [products, setProducts] = useState<Product[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const { search, tags, upvotes } = useFilter()
     const { isSignedIn } = useUser();
     const { toast } = useToast()
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setIsLoading(true)
             try {
-                const url = new URL('http://localhost:4000/products')
+                const url = new URL('https://product-chase.onrender.com/products')
                 url.searchParams.append('search', search)
                 url.searchParams.append('tags', tags.join(','))
                 url.searchParams.append('minUpvotes', upvotes.min.toString())
@@ -56,10 +59,12 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
             } catch (error) {
                 console.error("Error fetching products: ", error)
                 setProducts([])
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchProducts()
-    }, [search, tags, upvotes])
+    }, [search, tags, upvotes, setUniqueTags, uniqueTags.length])
 
     const addUpvote = async (id: string) => {
         if (!isSignedIn) {
@@ -79,7 +84,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/products/${id}`, {
+            const response = await fetch(`https://product-chase.onrender.com/products/${id}`, {
                 method: 'PUT'
             })
 
@@ -92,6 +97,35 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
         }
     }
 
+    if (isLoading) {
+        return (
+            <>
+                <h1 className='text-lg font-semibold mt-5 lg:mt-0'>All Products</h1>
+                <hr className='hidden lg:block' />
+                <div>
+                    <p className='text-sm text-gray-400 my-5'>This application uses Render's free tier. First requests may take a while.</p>
+                    {[...Array(5)].map((_, index) => (
+                        <div className='text-base animate-pulse' key={index}>
+                            <div className='flex flex-row justify-between gap-2 my-8'>
+                                <div className='flex flex-row'>
+                                    <div className='lg:w-12 lg:h-12 w-10 h-8 bg-gray-200 rounded'></div>
+                                </div>
+                                <div className='w-full'>
+                                    <div className='h-4 bg-gray-200 rounded w-3/4 mb-2'></div>
+                                    <div className='h-3 bg-gray-200 rounded w-1/2'></div>
+                                </div>
+                                <div className='flex flex-col items-center rounded px-2'>
+                                    <div className='h-4 w-4 bg-gray-200 rounded mb-1'></div>
+                                    <div className='h-4 w-4 bg-gray-200 rounded'></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             <h1 className='text-lg font-semibold mt-5 lg:mt-0'>All Products</h1>
@@ -101,11 +135,21 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                     <div className='text-base' key={index}>
                         <div className='flex flex-row justify-between gap-2 my-8'>
                             <div className='flex flex-row'>
-                                <img src={`${product.imageUrl}`} className='lg:w-12 lg:h-12 w-10 h-8 object-cover' alt="" />
+                                {product.imageUrl ? (
+                                    <Image 
+                                        src={product.imageUrl} 
+                                        alt={product.title}
+                                        width={500}
+                                        height={500}
+                                        className='lg:w-12 lg:h-12 w-10 h-8 object-cover'
+                                    />
+                                ) : (
+                                    <div className='lg:w-12 lg:h-12 w-10 h-8 bg-gray-200' />
+                                )}
                             </div>
                             <div className='w-full'>
                                 <div>
-                                    <a href={product.url}>
+                                    <a href={product.url} target='_blank' rel='noopener noreferrer'>
                                         <strong>{product.title}</strong>
                                         <span className='mx-1'>•</span>
                                         {product.description}

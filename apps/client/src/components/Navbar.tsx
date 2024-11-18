@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import AddProduct from "./AddProduct"
-import { Menu, X } from "lucide-react"
+import { Menu } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function Component() {
@@ -13,7 +13,7 @@ export default function Component() {
 
     return (
         <header className="sticky top-0 z-50 w-full ">
-            <div className="flex h-14 items-center">
+            <div className="flex h-14 items-center bg-white">
                 <div className="mr-4 hidden md:flex">
                     <Link href="/" className="mr-6 flex items-center space-x-2">
                         <span className="hidden font-bold sm:inline-block">🏹 Product Chase</span>

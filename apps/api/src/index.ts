@@ -10,7 +10,7 @@ import AWS from 'aws-sdk'
 dotenv.config();
 
 const app: Express = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -22,7 +22,15 @@ export { s3 };
 
 app.use('/api/webhooks', clerkWebhookHandler);
 
-app.use(cors())
+app.use(cors({
+    origin: [
+        'https://product-chase.vercel.app',
+        'http://localhost:3000'  // For local development
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type']
+}));
+
 app.use(bodyParser.json());
 
 app.use('/products', productRouter);
