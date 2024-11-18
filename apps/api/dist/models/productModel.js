@@ -48,7 +48,7 @@ const ProductSchema = new mongoose_1.Schema({
     },
     imageUrl: {
         type: String,
-        required: true
+        required: false
     }
 });
 exports.default = mongoose_1.default.model('Product', ProductSchema);

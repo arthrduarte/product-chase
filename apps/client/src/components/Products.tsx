@@ -135,13 +135,17 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                     <div className='text-base' key={index}>
                         <div className='flex flex-row justify-between gap-2 my-8'>
                             <div className='flex flex-row'>
-                                <Image 
-                                    src={product.imageUrl} 
-                                    alt={product.title}
-                                    width={500}
-                                    height={500}
-                                    className='lg:w-12 lg:h-12 w-10 h-8 object-cover'
-                                />
+                                {product.imageUrl ? (
+                                    <Image 
+                                        src={product.imageUrl} 
+                                        alt={product.title}
+                                        width={500}
+                                        height={500}
+                                        className='lg:w-12 lg:h-12 w-10 h-8 object-cover'
+                                    />
+                                ) : (
+                                    <div className='lg:w-12 lg:h-12 w-10 h-8 bg-gray-200' />
+                                )}
                             </div>
                             <div className='w-full'>
                                 <div>

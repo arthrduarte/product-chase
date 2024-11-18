@@ -14,7 +14,7 @@ const cors_1 = __importDefault(require("cors"));
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const port = 4000;
+const port = process.env.PORT || 4000;
 const s3 = new aws_sdk_1.default.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
