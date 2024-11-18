@@ -22,7 +22,15 @@ export { s3 };
 
 app.use('/api/webhooks', clerkWebhookHandler);
 
-app.use(cors())
+app.use(cors({
+    origin: [
+        'https://product-chase.vercel.app',
+        'http://localhost:3000'  // For local development
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type']
+}));
+
 app.use(bodyParser.json());
 
 app.use('/products', productRouter);
