@@ -149,7 +149,7 @@ export default function Products({ setUniqueTags, uniqueTags }: ProductsProps) {
                             </div>
                             <div className='w-full'>
                                 <div>
-                                    <a href={product.url}>
+                                    <a href={product.url} target='_blank' rel='noopener noreferrer'>
                                         <strong>{product.title}</strong>
                                         <span className='mx-1'>•</span>
                                         {product.description}

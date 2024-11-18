@@ -79,7 +79,7 @@ export default function AddProduct() {
             setTags([])
             toast({
                 title: "Product added",
-                description: "Your product was addded successfully",
+                description: "Your product was addded successfully. Please refresh the page to see it.",
                 className: "bg-green-400 text-white border-transparent",
             })
         } catch (error) {
